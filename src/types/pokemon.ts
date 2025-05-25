@@ -1,19 +1,4 @@
-// src/types/pokemon.ts
-
-export type NameEntry = {
-  language: { name: string };
-  name: string;
-};
-
-export type PokemonType = {
-  slot: number;
-  type: {
-    name: string;
-    url: string;
-  };
-};
-
-export type PokemonWithNames = {
+export interface PokemonWithNames {
   id: number;
   name: {
     en: string;
@@ -23,5 +8,16 @@ export type PokemonWithNames = {
     en: string;
     ko: string;
   }[];
- weight: number;
-};
+}
+
+export interface NameEntry {
+  language: { name: string };
+  name: string;
+}
+
+export interface PokemonType {
+  type: {
+    name: string;
+    url: string;
+  };
+}

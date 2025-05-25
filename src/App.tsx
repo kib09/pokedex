@@ -23,7 +23,7 @@ const App: React.FC = () => {
           fetch(`https://pokeapi.co/api/v2/pokemon/${i}`).then((res) => res.json()),
           fetch(`https://pokeapi.co/api/v2/pokemon-species/${i}`).then((res) => res.json()),
         ]);
-        console.log(pokemonData)
+
 
         const name_ko = (speciesData.names as NameEntry[]).find((n) => n.language.name === "ko")?.name ?? pokemonData.name;
 
