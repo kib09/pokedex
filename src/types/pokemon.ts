@@ -7,7 +7,9 @@ export interface PokemonWithNames {
   types: {
     en: string;
     ko: string;
+    
   }[];
+  weight:number;
 }
 
 export interface NameEntry {
