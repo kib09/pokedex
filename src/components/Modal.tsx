@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import type { PokemonWithNames } from "../types/pokemon";
+import MyFont from "../assets/font/pokemon-dppt.otf";
 
 interface ModalProps {
   pokemon: PokemonWithNames;
@@ -39,27 +40,29 @@ const Modal: React.FC<ModalProps> = ({ pokemon, onClose, language }) => {
   };
 
   return (
-    <Overlay onClick={onClose}>
-      <Container
-        ref={containerRef}
-        onClick={(e) => e.stopPropagation()}
-        onMouseMove={handleMouseMove}
-        onMouseOut={handleMouseOut}
-      >
-        <HoloOverlay ref={overlayRef} />
-        <CardContent>
-          <h2>{pokemon.name[language]}</h2>
-          <img
-            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`}
-            alt={pokemon.name[language]}
-            width="120"
-          />
-          <p>{language === "ko" ? "타입" : "Type"}: {pokemon.types.map(t => t[language]).join(", ")}</p>
-          <p>{language === "ko" ? "체중" : "Weight"}: {pokemon.id + 20}kg</p>
-        </CardContent>
-
-      </Container>
-    </Overlay>
+    <>
+      <FontStyle />
+      <Overlay onClick={onClose}>
+        <Container
+          ref={containerRef}
+          onClick={(e) => e.stopPropagation()}
+          onMouseMove={handleMouseMove}
+          onMouseOut={handleMouseOut}
+        >
+          <HoloOverlay ref={overlayRef} />
+          <CardContent>
+            <h2>{pokemon.name[language]}</h2>
+            <img
+              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`}
+              alt={pokemon.name[language]}
+              width="120"
+            />
+            <p>{language === "ko" ? "타입" : "Type"}: {pokemon.types.map(t => t[language]).join(", ")}</p>
+            <p>{language === "ko" ? "체중" : "Weight"}: {pokemon.id + 20}kg</p>
+          </CardContent>
+        </Container>
+      </Overlay>
+    </>
   );
 };
 
@@ -106,6 +109,7 @@ const HoloOverlay = styled.div`
 `;
 
 const CardContent = styled.div`
+  font-family: 'PokemonFont', sans-serif;
   z-index: 1;
   position: relative;
   color: black;
@@ -115,12 +119,21 @@ const CardContent = styled.div`
   box-sizing: border-box;
 
   img {
-    margin: 1rem auto;
+    margin: 1.6rem auto;
     display: block;
   }
 
   p {
-    font-size: 0.9rem;
+    font-size: 1.2rem;
   }
 `;
+const FontStyle = createGlobalStyle`
+  @font-face {
+    font-family: 'PokemonFont';
+    src: url(${MyFont}) format('opentype');
+  }
+`;
+
+
+;
 

@@ -54,7 +54,7 @@ const App: React.FC = () => {
 
   return (
     <Container>
-      <Title><img src={PokedexLogo} alt="Pokedex Logo" width="300" /></Title>
+      <Title><img src={PokedexLogo} alt="Pokedex Logo" width="250" /></Title>
       <LangButtons>
         <button onClick={() => setLanguage("en")}>English</button>
         <button onClick={() => setLanguage("ko")}>한국어</button>
