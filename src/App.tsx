@@ -5,7 +5,7 @@ import styled from "styled-components";
 import PokemonCard from "./components/PokemonCard";
 import type { PokemonWithNames, NameEntry, PokemonType } from "./types/pokemon";
 import Modal from "./components/Modal";
-
+import PokedexLogo from "./assets/pokedexLogo.png"
 
 const App: React.FC = () => {
   const [pokemons, setPokemons] = useState<PokemonWithNames[]>([]);
@@ -54,7 +54,7 @@ const App: React.FC = () => {
 
   return (
     <Container>
-      <Title>Pokedex</Title>
+      <Title><img src={PokedexLogo} alt="Pokedex Logo" width="300" /></Title>
       <LangButtons>
         <button onClick={() => setLanguage("en")}>English</button>
         <button onClick={() => setLanguage("ko")}>한국어</button>
