@@ -11,7 +11,7 @@ const App: React.FC = () => {
   const [pokemons, setPokemons] = useState<PokemonWithNames[]>([]);
   const [language, setLanguage] = useState<"en" | "ko">("en");
   const [selectedPokemon, setSelectedPokemon] = useState<PokemonWithNames | null>(null);
-  const pokeCount = 150; // 테스트용: 실제 150도 가능
+  const pokeCount = 20; // 
 
   useEffect(() => {
     const fetchPokemons = async () => {
