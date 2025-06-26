@@ -1,7 +1,7 @@
 // src/components/PokemonCard.tsx
 
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import type { PokemonWithNames } from "../types/pokemon";
 
 const typeColors: Record<string, string> = {
@@ -22,14 +22,29 @@ const typeColors: Record<string, string> = {
 };
 
 interface Props {
-  pokemon: PokemonWithNames;
+  pokemon?: PokemonWithNames;
   language: "en" | "ko";
-  onClick?: () => void;  // onClick prop 추가 (선택적)
+  isLoading?: boolean;
+  onClick?: () => void;
 }
 
-const PokemonCard: React.FC<Props> = ({ pokemon, language, onClick }) => {
-  const name = pokemon.name[language];
+const PokemonCard: React.FC<Props> = ({ pokemon, language, isLoading = false, onClick }) => {
+  if (isLoading || !pokemon) {
+    return (
+      <Card style={{ backgroundColor: "#eee" }}>
+        <ImgContainer>
+          <SkeletonCircle />
+        </ImgContainer>
+        <Info>
+          <SkeletonBar width="60%" />
+          <SkeletonBar width="80%" />
+          <SkeletonBar width="40%" />
+        </Info>
+      </Card>
+    );
+  }
 
+  const name = pokemon.name[language];
   const id = pokemon.id.toString().padStart(3, "0");
   const baseTypeEn = pokemon.types[0].en;
   const bgColor = typeColors[baseTypeEn] || "#eee";
@@ -55,15 +70,19 @@ const PokemonCard: React.FC<Props> = ({ pokemon, language, onClick }) => {
 
 export default PokemonCard;
 
+// 스타일 컴포넌트
+
 const Card = styled.div`
   width: 200px;
   border-radius: 10px;
   padding: 30px;
   text-align: center;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-   &:hover {
+  background-color: #eee;
+
+  &:hover {
     transform: scale(1.05);
-    transition: all .3s ease-in-out;
+    transition: all 0.3s ease-in-out;
     cursor: pointer;
   }
 `;
@@ -72,7 +91,6 @@ const ImgContainer = styled.div`
   width: 100px;
   height: 100px;
   margin: 0 auto;
-  
 `;
 
 const Info = styled.div`
@@ -91,4 +109,34 @@ const Type = styled.small`
   span {
     font-weight: bold;
   }
+`;
+
+// 스켈레톤 애니메이션
+const pulse = keyframes`
+  0% {
+    background-color: #ccc;
+  }
+  50% {
+    background-color: #ddd;
+  }
+  100% {
+    background-color: #ccc;
+  }
+`;
+
+const SkeletonBar = styled.div<{ width?: string }>`
+  height: 14px;
+  background-color: #ccc;
+  border-radius: 4px;
+  margin: 8px auto;
+  width: ${({ width }) => width || "100%"};
+  animation: ${pulse} 1.5s infinite ease-in-out;
+`;
+
+const SkeletonCircle = styled.div`
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #ccc;
+  animation: ${pulse} 1.5s infinite ease-in-out;
 `;

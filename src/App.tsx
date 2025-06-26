@@ -55,14 +55,25 @@ const App: React.FC = () => {
   return (
     <Container>
       <Title><img src={PokedexLogo} alt="Pokedex Logo" width="250" /></Title>
+
       <LangButtons>
         <button onClick={() => setLanguage("en")}>English</button>
         <button onClick={() => setLanguage("ko")}>한국어</button>
       </LangButtons>
+
       <Grid>
-        {pokemons.map((p) => (
-          <PokemonCard key={p.id} pokemon={p} language={language} onClick={() => setSelectedPokemon(p)} />
-        ))}
+        {pokemons.length === 0
+          ? Array.from({ length: pokeCount }).map((_, i) => (
+            <PokemonCard key={i} language={language} isLoading />
+          ))
+          : pokemons.map((p) => (
+            <PokemonCard
+              key={p.id}
+              pokemon={p}
+              language={language}
+              onClick={() => setSelectedPokemon(p)}
+            />
+          ))}
       </Grid>
       {selectedPokemon && (
         <Modal pokemon={selectedPokemon} onClose={() => setSelectedPokemon(null)} language={language} />
@@ -76,19 +87,25 @@ export default App;
 const Container = styled.div`
   padding: 2rem;
   text-align: center;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Title = styled.h1`
   margin-bottom: 1rem;
 `;
 
+
 const LangButtons = styled.div`
   margin-bottom: 2rem;
-  button {
-    margin: 0 0.5rem;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  button{
+    width: 100px;
+    height: 50px;
   }
+ 
 `;
 
 const Grid = styled.div`
